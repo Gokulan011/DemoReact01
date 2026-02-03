@@ -39,6 +39,37 @@ const postData =async()=>{
  useEffect(() => {
      getdata()
  }, [])
+
+    // Delete
+
+ const deleteuser=async(id)=>{
+    try{
+        await axios.delete(`https://698075bd6570ee87d50f4cc4.mockapi.io/test/${id}`);
+        getdata();
+    }
+    catch (error) {
+          console.error("Error deleting user:", error.message);
+          alert("Failed to delete user.");
+        }
+ };
+        // Update
+
+ const [updatename,setupdateName]=useState('')
+ const [updatestatus,setupdatestatus]=useState(false)
+
+ const updateuser = async(id) =>{
+    try{
+        await axios.put(`https://698075bd6570ee87d50f4cc4.mockapi.io/test/${id}`,{
+            name:updatename,
+            checked:updatestatus,
+        });
+        getdata();
+    }
+     catch (error) {
+          console.error("Error updating user:", error.message);
+          alert("Failed to update user.");
+        }
+ };
   return (
     <div>
 
@@ -51,7 +82,7 @@ const postData =async()=>{
     <input onChange={(event)=>{setCheck(event.target.checked)}} type="checkbox" /> <br />
 
      <button onClick={postData}>SUBMIT</button>
-
+ </div>
      <table>
         <tr>
             <td>Name</td>
@@ -68,9 +99,12 @@ const postData =async()=>{
         ))}
         </table> 
 
-</div>
-
-
+ <h1>UPDATE OPERATION</h1>
+    <div>
+        <label >Name</label> <br />
+        <input type="text" onChange={event => setupdateName(event.target.value)} /> <br />
+        <input type="checkbox" onChange={(e)=>setupdatestatus(e.target.checked)} />
+    </div>
     </div>
   )
 }
